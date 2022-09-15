@@ -7,6 +7,14 @@ import uvicorn
 
 app = FastAPI()
 
+@app.get('/')
+async def index():
+    indice = {'Pregunta 1: Año con más carreras. '
+              'Pregunta 2: Piloto con mayor cantidad de primeros puestos. '
+              'Pregunta 3: Nombre del circuito más corrido. '
+              'Pregunta 4: Piloto con mayor cantidad de puntos en total, cuyo constructor sea de nacionalidad sea American o British. '}
+    return indice
+
 @app.get('/races')
 def get_races():
     return conn.execute(select(func.count(t_races2.c.raceId).label('Cantidad_de_Carreras'),
