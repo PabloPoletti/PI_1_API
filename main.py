@@ -17,8 +17,8 @@ async def index():
 
 @app.get('/races')
 def get_races():
-    return conn.execute(select(func.count(t_races2.c.raceId).label('Cantidad_de_Carreras'),
-    (t_races2.c.year).label('Año con Mayor Cantidad de Carreras')).group_by(t_races2.c.year).order_by(desc('Cantidad_de_Carreras'))).first()
+    return conn.execute(select(func.count(t_races2.c.raceId).label('Cantidad_de_Carreras'),(t_races2.c.year).label('Año con Mayor Cantidad de Carreras')).
+         group_by(t_races2.c.year).order_by(desc('Cantidad_de_Carreras'))).first()
 
 @app.get('/Piloto')
 def get_Piloto():
@@ -36,8 +36,8 @@ def get_Circuito():
 
 @app.get('/MejorPiloto')
 def get_MejorPiloto():
-    return conn.execute(select((t_drivers.c.driverRef).label('Piloto Con Mayor Cantidad de Puntos corriendo con escuderias Britanica o Americana'),func.sum(t_results.c.points).label('Cantidad de Puntos')).
+    return conn.execute(select((t_drivers.c.driverRef).label('Piloto Con Mayor Cantidad de Puntos corriendo con escuderias Britanica o Americana'),func.sum(t_results.c.points).label('Cantidad de Puntos')).                   
         join(t_drivers, t_results.c.driverId==t_drivers.c.driverId).
         join(t_constructors, t_results.c.constructorId==t_constructors.c.constructorId).
         where(or_(t_constructors.c.nationality=='British',t_constructors.c.nationality=='American')).
-        group_by(t_results.c.driverId).order_by(desc('Puntos'))).first()
+        group_by(t_results.c.driverId).order_by(desc('Cantidad de Puntos'))).first()
