@@ -3,6 +3,7 @@ from fastapi import APIRouter
 from config.db import conn
 from models.models import t_drivers,t_races2, t_results,t_constructors,t_circuits2
 from sqlalchemy import  select, func, desc , or_ , and_
+import uvicorn
 
 app = FastAPI()
 
@@ -27,7 +28,7 @@ def get_Circuito():
 
 @app.get('/MejorPiloto')
 def get_MejorPiloto():
-    return conn.execute(select(func.sum(t_results.c.points).label('Puntos'), t_results.c.driverId, t_drivers.c.driverRef.label('Piloto')).
+    return conn.execute(select(func.sum(t_results.c.points).label('Puntos'), t_drivers.c.driverRef.label('Piloto')).
         join(t_drivers, t_results.c.driverId==t_drivers.c.driverId).
         join(t_constructors, t_results.c.constructorId==t_constructors.c.constructorId).
         where(or_(t_constructors.c.nationality=='British',t_constructors.c.nationality=='American')).
