@@ -1,5 +1,4 @@
-from fastapi import FastAPI
-from fastapi import APIRouter
+from fastapi import FastAPI, APIRouter
 from config.db import conn
 from models.models import t_drivers,t_races2, t_results,t_constructors,t_circuits2
 from sqlalchemy import  select, func, desc , or_ , and_
